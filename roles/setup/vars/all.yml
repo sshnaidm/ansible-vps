@@ -1,0 +1,11 @@
+---
+ssh_srv: sshd
+sshd_conf: /etc/ssh/sshd_config
+root_ssh_policy: without-password
+install_packages_all:
+  - name: vim
+    version: latest
+  - name: screen
+    version: latest
+  - name: curl
+    version: latest

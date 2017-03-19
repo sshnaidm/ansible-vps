@@ -1,0 +1,7 @@
+pkg_mgr: dnf
+install_packages:
+  - name: python-devel
+    version: latest
+
+  - name: python-dnf
+    version: latest

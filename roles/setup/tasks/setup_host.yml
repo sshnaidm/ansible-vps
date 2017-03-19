@@ -1,0 +1,44 @@
+- name: Add groups
+  group:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ user_groups }}"
+
+- name: Update cache
+  include: update_cache/{{ pkg_mgr }}_update.yml
+
+- name: Install packages
+  package:
+    name: "{{ item.name }}"
+    state: "{{ item.version }}"
+  with_items: "{{ install_packages }} + {{ install_packages_all }}"
+
+- name: Add group admins to sudoers
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%admin ALL'
+    line: '%admin ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- { include: create_user.yml, host_username: "{{ ansible_user }}" }
+
+- name: Reconfigure SSHD for root
+  lineinfile:
+    dest: "{{ sshd_conf }}"
+    regexp: "^[# ]*PermitRootLogin .*"
+    line: "PermitRootLogin {{ root_ssh_policy }}"
+  notify:
+    - restart sshd
+
+- name: Reconfigure SSHD for password
+  lineinfile:
+    dest: "{{ sshd_conf }}"
+    regexp: "^[# ]*PasswordAuthentication.*"
+    line: "PasswordAuthentication no"
+  notify:
+    - restart sshd
+
+- name: Debug
+  debug: "msg={{ansible_distribution}}-{{ ansible_distribution_release }}"

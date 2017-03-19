@@ -1,0 +1,9 @@
+pkg_mgr: apt
+ssh_srv: ssh
+install_packages:
+  - name: ca-certificates
+    version: present
+  - name: sudo
+    version: latest
+  - name: less
+    version: latest

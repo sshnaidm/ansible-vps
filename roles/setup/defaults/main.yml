@@ -1,0 +1,10 @@
+# Default variables for setup new host
+host_username: kite
+root_pass: "{{ pass }}"
+key_urls:
+  - https://github.com/sshnaidm.keys
+user_groups:
+  - admin
+  - developer
+  - docker
+upgrade: true

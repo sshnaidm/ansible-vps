@@ -1,0 +1,5 @@
+pkg_mgr: yum
+root_ssh_policy: forced-commands-only
+install_packages:
+  - name: python-devel
+    version: latest

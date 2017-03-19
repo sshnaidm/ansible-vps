@@ -1,0 +1,2 @@
+pkg_mgr: yum
+docker_package_name: docker-ce

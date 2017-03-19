@@ -1,0 +1,26 @@
+# Tasks for setup environment
+- include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version}}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- include: "installer/{{ pkg_mgr }}.yml"
+
+- name: install docker
+  package:
+    name: '{{ docker_package_name }}'
+    state: '{{ docker_version }}'
+  # Workaround for Ubuntu prompts
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+
+- name: Start docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Test docker setup
+  command: docker run hello-world
+  become: false

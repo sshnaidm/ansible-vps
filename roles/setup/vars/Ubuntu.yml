@@ -1,0 +1,4 @@
+pkg_mgr: apt
+install_packages:
+  - name: python-dev
+    version: latest

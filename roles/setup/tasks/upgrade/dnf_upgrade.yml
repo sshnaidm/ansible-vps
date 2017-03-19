@@ -1,0 +1,9 @@
+---
+- include: ../update_cache/dnf_update.yml
+
+- when: upgrade|bool
+  block:
+    - name: DNF update
+      dnf: name=* state=latest
+
+    - include: restart.yml

@@ -1,0 +1,9 @@
+---
+- include: ../update_cache/yum_update.yml
+
+- when: upgrade|bool
+  block:
+    - name: YUM update
+      yum: name=* state=latest
+
+    - include: restart.yml

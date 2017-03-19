@@ -1,0 +1,20 @@
+- name: Remove existing docker
+  dnf:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - docker
+    - docker-common
+    - container-selinux
+    - docker-selinux
+
+- name: Remove old docker repo files
+  shell: "find /etc/yum.repos.d/ -type f -name docker* -delete"
+
+- name: Download DNF repo
+  get_url:
+    url: https://download.docker.com/linux/fedora/docker-ce.repo
+    dest: /etc/yum.repos.d/docker.repo
+
+- name: Update DNF cache
+  shell: dnf makecache fast

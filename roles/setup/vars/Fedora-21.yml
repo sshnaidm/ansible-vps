@@ -1,0 +1,4 @@
+pkg_mgr: yum
+install_packages:
+  - name: python-devel
+    version: latest

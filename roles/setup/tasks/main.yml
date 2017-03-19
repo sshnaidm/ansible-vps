@@ -1,0 +1,18 @@
+# Tasks for setup environment
+
+- include_vars: "all.yml"
+- include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version}}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- include: setup_root_host.yml
+  when: ansible_user == "root"
+
+- include: setup_host.yml
+  when: ansible_user != "root"
+  become: true
+
+- include: 'upgrade/{{ ansible_pkg_mgr }}_upgrade.yml'
+  become: true

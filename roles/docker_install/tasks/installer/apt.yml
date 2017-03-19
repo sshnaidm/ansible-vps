@@ -1,0 +1,20 @@
+- name: 'Add the docker apt signing key'
+  shell: 'curl -fsSL https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg | apt-key add -'
+
+- name: 'Install apt-transport-https'
+  apt:
+    name: '{{ item }}'
+    update_cache: yes
+    install_recommends: no
+  with_items:
+    - '{{ apt_https_deps }}'
+
+- name: Remove old docker repo files
+  shell: "find /etc/apt/sources.list.d/ -type f -name docker* -delete"
+
+- name: 'Add the official docker repo'
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable"
+    state: 'present'
+    filename: docker
+    update_cache: yes

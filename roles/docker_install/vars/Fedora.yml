@@ -1,0 +1,2 @@
+pkg_mgr: dnf
+docker_package_name: docker-ce

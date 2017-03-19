@@ -1,0 +1,13 @@
+- include: ../update_cache/apt_update.yml
+
+- when: upgrade|bool
+  block:
+  # Workaround for Ubuntu 16 grub-pc prompts when updating
+    - name: APT upgrade all
+      shell: >
+        DEBIAN_FRONTEND=noninteractive apt-get -y
+        -o Dpkg::Options::="--force-confdef"
+        -o Dpkg::Options::="--force-confold"
+        dist-upgrade
+
+    - include: restart.yml

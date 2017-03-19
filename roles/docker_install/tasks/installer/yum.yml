@@ -1,0 +1,23 @@
+- name: Remove existing docker
+  yum:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - docker
+    - docker-common
+    - container-selinux
+    - docker-selinux
+  notify:
+    - Refresh YUM repo
+
+- when: ansible_distribution != 'Amazon'
+  block:
+    - name: Remove old docker repo files
+      shell: "find /etc/yum.repos.d/ -type f -name docker* -delete"
+
+    - name: Download YUM repo
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker.repo
+      notify:
+        - Refresh YUM repo

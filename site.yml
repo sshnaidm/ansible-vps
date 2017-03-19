@@ -1,0 +1,15 @@
+- hosts: all
+  gather_facts: no
+  ignore_errors: true
+  # Hack for Ubuntu 16
+  pre_tasks:
+    - name: Install python2
+      raw: "command -v python || sudo apt-get -y install python-simplejson"
+  tags:
+    - setup
+
+- hosts: all
+  gather_facts: yes
+  roles:
+    - { role: setup, tags: setup }
+    - { role: docker_install, become: true, tags: docker }

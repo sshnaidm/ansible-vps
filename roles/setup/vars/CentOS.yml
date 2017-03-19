@@ -1,0 +1,5 @@
+pkg_mgr: yum
+root_ssh_policy: without-password
+install_packages:
+  - name: python-devel
+    version: latest

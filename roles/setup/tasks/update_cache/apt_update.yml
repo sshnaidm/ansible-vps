@@ -1,0 +1,3 @@
+- name: APT upgrade all
+  apt:
+    update_cache: yes

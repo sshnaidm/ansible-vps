@@ -1,0 +1,7 @@
+pkg_mgr: apt
+apt_https_deps:
+  - apt-transport-https
+  - curl
+  - ca-certificates
+  - python-software-properties
+docker_package_name: docker-ce
