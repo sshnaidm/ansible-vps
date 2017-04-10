@@ -5,5 +5,7 @@
   block:
     - name: YUM update
       yum: name=* state=latest
+      register: updated
 
     - include: restart.yml
+      when: updated.changed

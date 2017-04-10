@@ -3,6 +3,13 @@ host_username: kite
 root_pass: "{{ pass }}"
 key_urls:
   - https://github.com/sshnaidm.keys
+keys_ssh:
+  - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAuztyn7xlRSCAu5maP2vPCUgVUugQ6V4Gdb
+    knPFugXMFbuvcgmj3B8BfK16gJAEQJhDxb1BCmoBvAf9quD84SbaC3l4iWwMALELEVZCFPsMrC7
+    +la7oUy1ntFXoEYRaZYQvly2f6iPjhU3vUGytxxvtafbZg6PtTbeITyt604jGLoLgsJuNjK8G0D
+    J0W5/wHVwJGNEcZMgmt9zeFKfELbL2hTJfUd5Fv8p6yFlCLE6ZXwpjAM/W7AvqSB4ttwy4XVOWB
+    d5uePsYiwfdeHWCiMCXzz5VyXv6wluOpZdXT2MDjClzvpO4YTArvK0v1MfWxIQSVmzz/U8DWjFA
+    mENvv1 stack@dell.tlv"
 user_groups:
   - admin
   - developer

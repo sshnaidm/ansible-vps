@@ -1,2 +1,3 @@
 - name: restart sshd
   service: "name={{ ssh_srv }} state=restarted"
+  become: true

@@ -6,12 +6,32 @@
     groups: "{{ user_groups|join(',') }}"
     append: yes
 
-- name: Set authorized key took from url
+- name: Clean up temporary authorized file
+  copy:
+    content: '# ANSIBLE GENERATED SSH KEYS FILE'
+    dest: "/tmp/auth_keys"
+    force: yes
+
+- name: Add SSH keys to file
+  lineinfile:
+    line: "{{ item }}"
+    dest: "/tmp/auth_keys"
+    state: present
+  with_url: "{{ key_urls|default([]) }}"
+
+- name: Add SSH keys to file from URLs
+  lineinfile:
+    line: "{{ item }}"
+    dest: "/tmp/auth_keys"
+    state: present
+  with_items:
+    - "{{ keys_ssh|default([]) }}"
+
+- name: Set authorized key
   authorized_key:
     user: "{{ host_username }}"
     state: present
     key: "{{ item }}"
     exclusive: true
-  with_items:
-    - "{{ key_urls }}"
-
+  with_file:
+    - "/tmp/auth_keys"
