@@ -21,6 +21,14 @@
     state: started
     enabled: yes
 
-- name: Test docker setup
-  command: docker run hello-world
-  become: false
+- become: false
+  block:
+
+  - name: Test docker setup
+    command: docker run hello-world
+
+  - name: Remove test setup
+    shell: >
+      docker ps -a | grep "hello-world" | awk {'print $1'} |
+      xargs -t --no-run-if-empty docker rm;
+      docker rmi hello-world;

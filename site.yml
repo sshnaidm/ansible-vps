@@ -7,10 +7,15 @@
       raw: "command -v python || sudo apt-get -y install python-simplejson"
       changed_when: false
   tags:
-    - setup
+    - prepare
 
 - hosts: all
   gather_facts: yes
   roles:
-    - { role: setup, tags: setup }
-    - { role: docker_install, become: true, tags: docker }
+    - { role: setup, tags: ['prepare'] }
+    - { role: docker_install, become: true, tags: ['docker'] }
+
+- hosts: all
+  gather_facts: yes
+  roles:
+    - { role: docker_config, become: true, tags: ['docker_config'] }

@@ -1,12 +1,13 @@
 ---
-- name: Write docker default conifg
-  template:
-    src: docker_default.j2
-    dest: /etc/default/docker
+- when: docker_configure
+  block:
+    - name: Write docker default conifg
+      template:
+        src: daemon.json.j2
+        dest: /etc/docker/daemon.json
 
-
-- name: Restart docker
-  service:
-    name: docker
-    state: restarted
-    enabled: yes
+    - name: Reload docker
+      service:
+        name: docker
+        state: restarted
+        enabled: yes
